@@ -107,4 +107,17 @@ Para resolver o problema do som secundário descontrolado que ficava emitindo se
 - Para gerar os bundles: `cargo truce build`
 - Para instalar localmente na máquina: `cargo truce install --user`
 - Para rodar o standalone de teste: `cargo run`
+
+8. PUBLICAÇÃO NO GITHUB E RELEASE v1.0.0 (CONCLUÍDO)
+--------------------------------------------------------------------------------
+- Padrão de fábrica atualizado: Todos os presets configurados com Ronca <= 10%
+  (entre 4.0% e 10.0%, padrão no código em 8.0%).
+- README.md em inglês completo: inclui contexto histórico do Mad Professor e
+  estúdio Ariwa, fotos dos racks analisados, patentes e equações dos circuitos,
+  modelagem física de voz de baixo dub, mecânica de contenção e decay, guia de
+  instalação/desinstalação e compilação.
+- Repositório GitHub: https://github.com/nagualcode/ariwabass
+- GitHub Release v1.0.0: https://github.com/nagualcode/ariwabass/releases/tag/v1.0.0
+- Binário anexado: `Ariwa-Bass-v1.0.0-macOS-AppleSilicon.zip` (VST3, CLAP, AU v2,
+  install.sh, uninstall.sh, README.md, LICENSE).
 ================================================================================
