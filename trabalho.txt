@@ -1,0 +1,110 @@
+================================================================================
+RELATÓRIO DE CONSOLIDAÇÃO DO PROJETO: ARIWA BASS (DUB BASS INSTRUMENT)
+Data: 17/10/2026
+Repositório: /Users/nagual/code/ariwabass
+Framework: Truce v6.3 (Rust)
+Objetivo: Recriação do som analógico "ronca e desliza" do estúdio Ariwa
+(Neil Fraser / Mad Professor) nos anos 80 e 90, formatado como Instrumento VST/CLAP/AU.
+================================================================================
+
+1. VISÃO GERAL DA TRANSIÇÃO DE EFEITO PARA INSTRUMENTO VST
+--------------------------------------------------------------------------------
+- Inicialmente o plugin foi concebido como um efeito de áudio. Contudo, ao processar
+  linhas de baixo externas com filtro estático/LFO contínuo, a mesma nota ficava
+  soando em drone e tornava a linha de baixo ininteligível.
+- A pedido do usuário, o plugin foi transformado em um INSTRUMENTO VST/CLAP/AU
+  (Sintetizador e Gerador de Baixo Dub), onde a geração de áudio é nativa, disparada
+  por MIDI ou pelo teclado interativo na tela, com o efeito "Ronca e Desliza"
+  rastreando perfeitamente a nota fundamental (key-tracking) e podendo ser ligado/desligado.
+
+2. ARQUITETURA DSP E MODELAGEM DE HARDWARE (src/dsp.rs)
+--------------------------------------------------------------------------------
+1. Gerador de Vozes de Baixo Dub (BassVoiceModel):
+   - SH-101 Sub: Sawtooth PolyBLEP + PWM Pulse + Sub-oscilador -1 oitava em fase.
+   - Mini 3x: Pilha de 3 osciladores Minimoog Model D com desafinação analógica.
+   - Flatwound: Modelo físico de corda de baixo elétrico Fender Jazz/Precision flatwound.
+   - Steppers: Baixo UK Dub dos anos 90 (senoide pura de sub + saws estéreo).
+2. Sistema Monofônico / Legato com Portamento:
+   - Pilha de prioridade da última nota (16 notas), pitch bend (+-2 semitons),
+     mod wheel (CC1), pedal de sustain (CC64) e portamento RC ajustável (Glide ms).
+3. Sub-Harmônico MXR Model 129:
+   - Sub-oitava -1 Oct gerada e compandida com modelo do circuito Am6072 u-255.
+4. Efeito "Ronca e Desliza" Chaveável (Ariwa FX On/Off):
+   - Chave mestre na GUI e parâmetros: quando OFF, toca como sub-bass limpo e quente.
+     Quando ON, engata o circuito psicodélico completo da Ariwa.
+   - Filtro Akai MFC42 (SSM2164S + NJM2082M): Modos 2P (-12dB), 4P (-24dB) e 8P (-48dB).
+     Rastreia a fundamental tocada para manter a ressonância nas formantes vocais.
+   - Envelope Óptico Mu-Tron III / Line 6 Filter Pro (Prog 41 LOW): Bipolar (-100% a +100%).
+     Valores positivos = Tron Up; valores negativos = Tron Down plunge no sub.
+   - Estágio de Ronco 1SS133: Diodos de silício com 4x oversampling linear-phase (HQ).
+   - MXR Model 131 Auto Phaser: Phaser vactrol de 6 estágios estéreo acima de 95 Hz.
+   - Otari MTR-90 2" Tape Head Bump (62 Hz) + LA-4 & dbx 166 True-RMS VCA & PeakStop.
+
+3. DISCIPLINA E CONTENÇÃO DINÂMICA (PATENTES ROLAND TB-303, MINIMOOG E SH-101)
+--------------------------------------------------------------------------------
+Para resolver o problema do som secundário descontrolado que ficava emitindo sem parar:
+1. Envelope de VCA e VCF com Decaimento Contido (TB-303 / US 4,635,521):
+   - Ataque percussivo ultra-rápido (1.8 ms), eliminando estalos.
+   - Decaimento exponencial rigoroso controlado por Decay (80 ms a 2.5 s).
+   - Piso de sustain contido (limitado a max 0.25), impedindo drones contínuos e
+     mantendo o baixo firme, encorpado e com punch definido ao apertar da nota.
+   - Release rápido de 25 ms no Note-Off, cortando instantaneamente qualquer resíduo.
+2. Amortecimento Dinâmico de Ressonância (Anti-Whistle):
+   - A ressonância do filtro (Ronca) morde no ataque e decai com a nota,
+     impedindo que o filtro Akai MFC42 auto-oscile ou apite sem parar ao sustentar notas.
+   - Q máximo domado para 5.2 (ao invés de 8.5), gerando calor analógico sem aspereza.
+3. Wobble LFO Contido e Sincronizado por Nota:
+   - O LFO reinicia a fase em cada Note-On (alinhamento ao groove).
+   - Amplitude de modulação calibrada para +/- 0.55 oitavas e multiplicada pelo envelope da nota,
+     garantindo que o wobble articule o corpo da nota e assente, sem agir como sirene contínua.
+4. Phaser MXR 131 Suavizado:
+   - Realimentação reduzida para 0.14 e profundidade para 0.45, adicionando dimensão estéreo
+     líquida sem criar ressonadores parasitas de fundo.
+5. Limpeza de Estados Anti-Hang no Silêncio:
+   - Quando amp_env < 1e-4 e nenhum gate está aberto, os estados dos filtros, delays e phasers
+     são zerados, garantindo silêncio absoluto entre as notas sem cauda persistente.
+
+4. INTERFACE MODERNA INSPIRADA NO ABLETON LIVE (src/editor.rs)
+--------------------------------------------------------------------------------
+- Paleta Dark do Ableton Live 12 com acentos por módulo de hardware.
+- Topo: Botão mestre "RONCA FX: ON / CLEAN SUB", Seletor de Presets e Botão HQ 4x.
+- Visor Interativo: Curva analítica em tempo real (Filtro MFC42 + Phaser MXR 131),
+  pad de arraste X/Y (Frequência vs Ronca), chaveador 2P/4P/8P e indicador da nota MIDI ativa.
+- Seletor de Vozes: Pílulas para selecionar SH-101 Sub, Mini 3x, Flatwound e Steppers.
+- Dials Superiores: Frequency, Ronca, Desliza, Wobble, Speed/Divisão (+ Sync).
+- Dials Inferiores: Glide, Sub Oct, Decay, Drive, Phaser, Glue, Out Gain.
+- Medidores: Stereo Gain Reduction (GR) e Peak Output (Out) com dBFS.
+- Teclado de Baixo Inferior: 2 oitavas completas (C1 a C3) interativo e clicável/arrastável
+  com mouse na GUI, além de acender visualmente com as notas recebidas via MIDI.
+
+5. PRESETS DE FÁBRICA ATUALIZADOS (src/presets.rs)
+--------------------------------------------------------------------------------
+8 presets curados cobrindo clássicos do Dub com contenção precisa e punch musical:
+1. Ariwa Sweet Growl (Prog 41) - SH-101 Sub + Line 6 + MFC42 4P + MXR 131 + LA-4 (Decay 450ms, Wobble 0%)
+2. Dub Me Crazy Tron Down - Minimoog 3x + Mu-Tron III Down plunge (Decay 480ms, Wobble 0%)
+3. MFC42 8-Pole Sub Roar - Minimoog 3x + MFC42 8P Brickwall + Diodo 1SS133 (Decay 520ms)
+4. Flatwound Lovers Rock Dub - Fender Jazz Flatwound + MXR 131 Phaser + 2P (Decay 420ms)
+5. MXR 129 Sub-Octave Glider - SH-101 Sub + MXR 129 + Portamento 120ms (Decay 600ms)
+6. Jah Shaka Steppers Wobble - Steppers Reese + LFO 1/8T sincado e contido + dbx 166 PeakStop
+7. Black Liberation Clean Sub - Sub limpo e profundo (Ronca & Desliza FX Off, Decay 550ms)
+8. No Protection 90s Bristol Dub - Steppers Reese + 8P Tron Down lento + MXR 131
+
+6. STATUS DOS TESTES E BUILDS
+--------------------------------------------------------------------------------
+- cargo test: 13 testes unitários e DSP passando com 0 falhas (real-time zero-allocation,
+  PolyBLEP, rastreamento de pitch, harmônicos H2>H3, declive do filtro e screenshot da GUI).
+- clap-validator: 37/37 testes aprovados com 0 erros.
+- pluginval (nível 5 de rigor): Validado com sucesso no formato Instrumento (0 inputs, 2 outputs).
+- Bundles gerados e assinados em target/bundles/:
+  * Ariwa Bass.vst3
+  * Ariwa Bass.clap
+  * Ariwa Bass.component (Audio Unit)
+
+7. INSTRUÇÕES PARA O PRÓXIMO AGENTE / CONTINUIDADE
+--------------------------------------------------------------------------------
+- O projeto está 100% funcional e compilando perfeitamente.
+- Para rodar testes: `cargo test`
+- Para gerar os bundles: `cargo truce build`
+- Para instalar localmente na máquina: `cargo truce install --user`
+- Para rodar o standalone de teste: `cargo run`
+================================================================================

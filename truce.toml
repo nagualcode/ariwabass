@@ -1,0 +1,18 @@
+[vendor]
+name = "Jardim Sonoro"
+id = "com.jardimsonoro"
+url = "https://github.com/nagualcode/ariwabass"
+au_manufacturer = "Jrdm"
+
+[[plugin]]
+name = "Ariwa Bass"
+bundle_id = "ariwa-bass"
+crate = "ariwa-bass"
+category = "instrument"
+fourcc = "ArBs"
+au3_subtype = "ArBs"
+au_tag = "Synthesizer"
+aax_category = "Synth"
+vst3_subcategory = "Synth"
+midi_input = true
+description = "Mad Professor Ariwa Studios 80s/90s psychedelic dub bass instrument ('ronca e desliza')"

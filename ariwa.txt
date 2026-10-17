@@ -1,0 +1,103 @@
+Os equipamentos de *outboard* desta foto do **Ariwa Studios** (do produtor de dub Mad Professor) estão divididos entre processamento de dinâmica/equalização no rack da esquerda e efeitos de tempo, modulação, pitch e filtragem no rack da direita:
+
+## Rack da Esquerda (De cima para baixo)
+
+1. **UREI LA-4 Compressor/Limiter (x2 — par montado lado a lado)**
+
+
+Dois compressores/limitadores ópticos clássicos (versão *silverface*) montados em uma bandeja de 2U.
+
+
+2. **DigiTech Studio Vocalist**
+
+
+Processador digital de harmonia vocal de 2U, capaz de gerar até quatro vozes de harmonia adicionais e correção de afinação.
+
+
+3. **Drawmer DS201 Dual Gate (x3)**
+
+
+Três unidades empilhadas do clássico *noise gate* duplo analógico de 1U — peça central no dub e na produção dos anos 80/90 para esculpir caudas de caixa (*snare*), bumbos e criar cortes rítmicos via *key input* com filtros de *sidechain*.
+
+
+4. **dbx 266xl Compressor/Gate**
+
+
+Compressor e gate de dois canais (1U).
+
+
+5. **dbx 166 Compressor/Limiter/Gate (x2)**
+
+
+Duas unidades empilhadas do compressor/limitador VCA de dois canais com *gate* e limitador *PeakStop* (versão clássica preta de LEDs).
+
+
+6. **UREI 1178 Dual Peak Limiter**
+
+
+Limitador de pico FET de dois canais (2U). É a versão dupla/estéreo do clássico UREI 1176, facilmente identificável pelos dois medidores VU centrais, quatro *knobs* de entrada/saída à esquerda e a inscrição *"DUAL PEAK LIMITER"* na parte inferior.
+
+
+7. **ART 172 Dual 1/3 Octave Graphic Equalizer (x2)**
+
+
+Duas unidades de 2U de equalizadores gráficos de 1/3 de oitava da Applied Research & Technology (ART) na base do rack.
+
+
+
+---
+
+## Rack da Direita (De cima para baixo)
+
+1. **MXR Auto Phaser — Série Model 131 (x2 — módulos *half-rack* azuis)**
+
+
+Dois módulos analógicos de *phaser* automático montados lado a lado no topo (um dos efeitos favoritos de Mad Professor conectados diretamente à mesa para varreduras de dub).
+
+
+2. **Eventide Model H3000-D/SE Ultra-Harmonizer**
+
+
+Lendário multi-efeitos digital, *pitch shifter* e *harmonizer* de 2U (com um adesivo *"PASSO"* colado no canto superior esquerdo), famoso tanto pelos algoritmos de *micro-pitch* quanto pelos *presets* de efeitos espaciais e modulação.
+
+
+3. **Roland SDE-330 Dimensional Space Delay**
+
+
+Unidade de delay digital de 1U da série Roland RSS, capaz de processamento espacial tridimensional e múltiplos *taps* de atraso.
+
+
+4. **Line 6 Filter Pro**
+
+
+Módulo de rack roxo de 1U dedicado à modelagem de filtros clássicos (sintetizadores analógicos vintage, *wahs*, *formant filters* e *envelope followers*) com sincronia MIDI/tap tempo.
+
+
+5. **Roland SDE-3000 Digital Delay**
+
+
+Um dos principais segredos do som do Ariwa Studios: o delay digital de 1U com visores de LED amarelos/vermelhos da Roland. Mad Professor mantém várias unidades desse modelo espalhadas pelo estúdio para criar *feedback loops* nos auxiliares da mesa sem degradar ou distorcer de forma indesejada.
+
+
+6. **Alesis QuadraVerb**
+
+
+Processador multi-efeitos digital de 1U (reverb, delay, chorus, flanger e pitch) muito usado em música eletrônica e dub do final dos anos 80 e anos 90.
+
+
+7. **Akai MFC42 Analog Filter Module**
+
+
+Módulo de filtro analógico verdadeiro de 2U (com canais *Mono* e *Stereo* independentes), equipado com filtros *low-pass*, *high-pass*, *band-pass* e *notch*, além de distorção, *phaser* e LFO sincronizável para varreduras manuais na mixagem.
+
+
+8. **MXR Pitch Transposer Display (1U) + MXR Model 129 Pitch Transposer (2U)**
+
+
+Conjunto clássico do final dos anos 70/início dos anos 80: em cima, o módulo preto de 1U que exibe a leitura digital de intervalos (*Pitch Transposer Display*); logo abaixo, a unidade principal azul de 2U (*MXR Pitch Transposer*, marcada com o número "35"), com 4 botões de *preset* de afinação e controle de *regeneration*.
+
+
+9. **Lexicon 480L Digital Effects System (Mainframe)**
+
+
+Na base direita, o chassi principal de 3U do clássico reverb digital topo de linha da Lexicon (normalmente operado à distância pelo controle remoto branco LARC sobre o console), que Mad Professor deixa permanentemente endereçado nos primeiros auxiliares estéreo da mesa.
