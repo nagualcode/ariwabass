@@ -1,4 +1,4 @@
-# Ariwa Bass — Mad Professor's '80s/'90s "Ronca e Desliza" Dub Bass Instrument
+# Ariwa Bass —  Dub Bass Instrument
 
 [![CI](https://github.com/nagualcode/ariwabass/actions/workflows/ci.yml/badge.svg)](https://github.com/nagualcode/ariwabass)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
