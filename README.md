@@ -10,7 +10,7 @@
 
 ## 🎹 Synthesizer Architecture & Dynamic Bass Containment
 
-To ensure the instrument sits tightly in a mix without runaway drones or background whistling, **Ariwa Bass** incorporates containment principles from classic bass synthesizer patents (**Roland TB-303 / Tadao Kikumoto US Patent 4,635,521** and Bob Moog's Minimoog):
+ **Ariwa Bass** incorporates containment principles from classic bass synthesizer patents (**Roland TB-303 / Tadao Kikumoto US Patent 4,635,521** and Bob Moog's Minimoog):
 
 1. **Contained VCA & VCF Decay Envelopes:**
    - Ultra-fast $1.8\text{ ms}$ click-free analog attack.
