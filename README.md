@@ -6,54 +6,7 @@
 
 **Ariwa Bass** is a zero-allocation, real-time analog modeling **Dub Bass Instrument (VST3, CLAP, Audio Unit, and Standalone)** built in Rust using the [Truce](https://github.com/truce-audio/truce) framework.
 
-It reconstructs the legendary 1980s and 1990s **"ronca e desliza"** (*sweet psychedelic growl and slide*) bass effect pioneered by **Neil Fraser (Mad Professor)** at the historic **Ariwa Sound Studios** (Thornton Heath, South London) — the liquid, organic, and vocal sub-bass movement heard across landmark albums such as *Dub Me Crazy*, *Black Liberation Dub*, *Jah Shaka Meets Mad Professor*, and Massive Attack's *No Protection*.
 
-![Ariwa Bass Interface](screenshots/ariwa_bass_macos.png)
-
-![Ariwa Studios Outboard Rack](MadProfessor_3a.jpg)
-
----
-
-## 🔬 Forensic Research & Hardware Modeling
-
-The DSP architecture of **Ariwa Bass** models the exact analog and hybrid outboard signal chain photographed in Mad Professor's personal Ariwa rack (*Sound On Sound*, August 2007) combined with component-level physics, service manuals, and historic audio patents:
-
-```mermaid
-flowchart LR
-    Voice["Bass Voice Generator<br/>(SH-101 / Mini 3x / Flatwound / Steppers)"] --> Tape["0. Otari MTR-90 2\" Tape & 1/f Flux<br/>(61.87 Hz Head Bump + Class-A H2)"]
-    Tape --> Split{"SSL Console In-Line Split"}
-    Split -->|"Sub Anchor (<95 Hz) + Dry"| Mix["Phase-Coherent Parallel Sum"]
-    Split -->|"Dub FX Path (Wet)"| MXR129["1. MXR Model 129 Pitch Transposer<br/>(-1 Oct Companded + 555 VCO Glide)"]
-    MXR129 --> Filter["2. Akai MFC42 (SSM2164S 2P/4P/8P SVF)<br/>+ Line 6 Filter Pro (Prog 41 'LOW' / Mu-Tron III)"]
-    Filter --> Diode["3. 1SS133 Silicon Diode Growl<br/>(4x Kaiser Linear-Phase Oversampling)"]
-    Diode --> Phaser["4. MXR Series 131 (M-110)<br/>(Dual 6-Stage Vactrol Auto Phaser)"]
-    Phaser --> Glue["5. UREI LA-4 (CdS Optical)<br/>+ dbx 166 (True-RMS VCA + PeakStop)"]
-    Glue --> Mix
-```
-
-### 1. Why the Ariwa Bass Sound is "Sweet and Psychedelic" (Not Aggressive)
-
-1. **Cascaded 2-Pole / 4-Pole / 8-Pole SSM2164S State-Variable Filter (Akai MFC42):**
-   - The **Akai MFC42** analog filter module utilizes **5x `SSM2164S`** quad exponential VCAs ($-33\text{ mV/dB}$ control law) with `NJM2082M` JFET operational amplifiers.
-   - In 8-Pole Mono mode ($-48\text{ dB/octave}$), four 2-pole SVF blocks cascade in series:
-     $$H_{8\text{P}}(s) = \left(\frac{\omega_c^2}{s^2 + \frac{\omega_c}{Q}s + \omega_c^2}\right)^4$$
-   - This steep slope eliminates all harsh high frequencies above $600\text{–}1200\text{ Hz}$, locking the resonant energy strictly into the human chest/throat vocal formant region ($80\text{–}450\text{ Hz}$).
-2. **Post-Filter `1SS133` Silicon Diode Throat Growl ("Ronca"):**
-   - Anti-parallel `1SS133T-77` silicon diodes gently saturate the signal inside the resonator loop and at the `NJM4558M` post-filter driver stage.
-   - Because the input to the clipper is pre-filtered by 24 dB or 48 dB per octave, intermodulation distortion (IMD) is virtually zero. It generates pure, musical second and third harmonics ($H_2 > H_3$) that sound like an organic, purring throat rather than harsh digital fuzz.
-3. **Photoconductive CdS Optocoupler Envelope ("Desliza") — US Patents 3,911,776 & 5,789,689:**
-   - In `MadProfessor_3a.jpg`, the purple **Line 6 Filter Pro** is dialed to **Program `41`** with the screen displaying **`LOW`** (Low-Pass Filter with Mu-Tron III envelope follower dynamics).
-   - Cadmium Sulfide (CdS) photoresistors follow a dual-stage photoconductive decay ($\tau_1 \approx 35\text{ ms}$, $\tau_2 \approx 185\text{ ms}$) governed by the power law $R_{\text{opt}} \propto I_{\text{LED}}^{-\gamma}$.
-   - **`Tron Up` (`Desliza > 0%`)**: Sweeps upward through the vocal formants on note attack.
-   - **`Tron Down` (`Desliza < 0%`)**: Program 41 plunge starting elevated and diving down into the sub-bass fundamental.
-4. **MXR Model 129 Pitch Transposer Sub-Octave (Tony Gambacurta, 1978):**
-   - Dual-head $180^\circ$ crossfading circular buffer ($\Delta T \approx 25.6\text{ ms}$) with an **XOR Polarity Correlator** (`U25` + `U16` XOR gate) that phase-aligns splices, combined with **`Am6072` $\mu$-255 companding** and a 555 VCO pitch glide.
-5. **Dual MXR Model 131 (M-110) 6-Stage Vactrol Auto Phaser:**
-   - Six cascaded first-order all-pass stages with Vactrol LED/LDR control above a $95\text{ Hz}$ crossover (keeping the sub-bass 100% mono-anchored and phase-stable) producing 3 deep comb notches ($0.268 f_0, 1.0 f_0, 3.732 f_0$) in stereo quadrature.
-6. **UREI LA-4 Optical Compressor + dbx 166 (US Patents 3,681,618 & 3,714,462):**
-   - David Blackmer's True-RMS logarithmic power detector, OverEasy® soft knee, $82\text{ k}\Omega$ CdS optical release memory, and PeakStop® diode limiter clamping resonant peaks into a warm cushion of sub-bass.
-
----
 
 ## 🎹 Synthesizer Architecture & Dynamic Bass Containment
 
